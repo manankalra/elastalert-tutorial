@@ -1,0 +1,31 @@
+name: Filesystem Alert
+type: metric_aggregation
+index: metricbeat-*
+metric_agg_key: system.filesystem.used.pct
+metric_agg_type: avg
+query_key: beat.hostname
+doc_type: metricsets
+bucket_interval:
+  seconds: 10
+sync_bucket_interval: true
+#min_threshold: 0.1
+max_threshold: 0.50
+filter:
+- term:
+    metricset.name: filesystem
+alert:
+- debug
+- email
+- slack
+email: 
+- "<username>@<domainname>"
+###########################
+smtp_host: "smtp.gmail.com" #for google email addresses
+smtp_port: 465
+smtp_ssl: true
+###########################
+from_addr: "<username>@<domainname>"
+smtp_auth_file: "smtp_auth_file.yaml"
+slack_webhook_url: ""
+slack_channel_override: "#<channel-name>"
+slack_username_override: "@<user-name>"
